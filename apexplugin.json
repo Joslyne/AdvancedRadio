@@ -5,10 +5,10 @@
   "keywords" : ["radio", "joslyne", "item", "Specify", "Custom", "other", "extra" ],
   "homepage" : "https://github.com/Joslyne/AdvancedRadio",
   "bugs" : {
-    "url" : "",
+    "url" : "https://github.com/Joslyne/AdvancedRadio/issues",
     "email" : ""
   },
-  "license" : "",
+  "license" : "MIT",
   "author" : {
     "name" : "Joslyne Cook",
     "email" : "",
