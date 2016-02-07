@@ -1,0 +1,33 @@
+{
+  "name" : "AdvancedRadio",
+  "version" : "1.0",
+  "description" : "Radio Group with the option of Sorting by rows or columns, and add an extra Option to allow users to specify another value. ",
+  "keywords" : ["radio", "joslyne", "item", "Specify", "Custom", "other", "extra" ],
+  "homepage" : "https://github.com/Joslyne/AdvancedRadio",
+  "bugs" : {
+    "url" : "",
+    "email" : ""
+  },
+  "license" : "",
+  "author" : {
+    "name" : "Joslyne Cook",
+    "email" : "",
+    "url" : ""
+  },
+  "repository" : {
+    "type" : "git",
+    "url" : "https://github.com/Joslyne/AdvancedRadio.git"
+  },
+ "oracle" : {
+    "versions" : ["11.2.0.1", "12.1.0.1"],
+    "apex" : {
+      "versions" : ["4.1.0","4.2.0","5.0.0"],
+      "plugin" : {
+        "internalName" : "AU.JC.ADVANCED_RADIO",
+        "type" : "item",
+        "demo" : "https://apex.oracle.com/pls/apex/f?p=17217:1",
+        "previewImage" : "https://cloud.githubusercontent.com/assets/17076061/12871152/acccfeb2-cdb6-11e5-8d41-373f8b982415.png"
+      }
+    }
+  }
+}
