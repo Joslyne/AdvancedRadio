@@ -30,7 +30,7 @@ begin
 wwv_flow_api.create_plugin(
  p_id=>wwv_flow_api.id(24522654590973709232)
 ,p_plugin_type=>'ITEM TYPE'
-,p_name=>'AU.JP.ADVANCED_RADIO'
+,p_name=>'AU.JC.ADVANCED_RADIO'
 ,p_display_name=>'Advanced Radio'
 ,p_supported_ui_types=>'DESKTOP:JQM_SMARTPHONE'
 ,p_plsql_code=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
