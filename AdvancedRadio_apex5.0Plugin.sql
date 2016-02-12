@@ -324,7 +324,7 @@ wwv_flow_api.create_plugin(
 '        ''<input type="radio"    style="margin:5px 3px 5px 5px; "     name="''||l_name||''"  ''|| ',
 '                ''id="''||p_item.name||''_''||l_total ||''" ''||',
 '               /* case when p_is_readonly then '' readonly="readonly" '' end || */ ',
-'        '' value=''||sys.htf.escape_sc(p_value)|| ''" checked="checked" ''    || '' />''||',
+'        '' value="''||sys.htf.escape_sc(p_value)|| ''" checked="checked" ''    || '' />''||',
 '        ''<label for="''||p_item.name||''_''||l_total  ||''">''|| nvl(sys.htf.escape_sc(p_value), ''(null)'') ||''</label> ''||',
 '       ''</div>''',
 '        ); ',
