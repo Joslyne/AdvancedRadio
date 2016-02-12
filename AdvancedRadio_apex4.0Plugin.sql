@@ -389,7 +389,7 @@ wwv_flow_api.create_plugin (
 '        ''<input type="radio"    style="margin:5px 3px 5px 5px; "     name="''||l_name||''"  ''|| '||chr(10)||
 '                ''id="''||p_item.name||''_''||l_total ||''" ''||'||chr(10)||
 '               /* case when p_is_readonly then '' readonly="readonly" '' end || */ '||chr(10)||
-'        '' value=''||sys.htf.escape_sc(p_value)|| ''" checked="checked" ''    || '' />''||'||chr(10)||
+'        '' value="''||sys.htf.escape_sc(p_value)|| ''" checked="checked" ''    || '' />''||'||chr(10)||
 '        ''<label f'||
 'or="''||p_item.name||''_''||l_total  ||''">''|| nvl(sys.htf.escape_sc(p_value), ''(null)'') ||''</label> ''||'||chr(10)||
 '       ''</div>'''||chr(10)||
