@@ -70,7 +70,7 @@ wwv_flow_api.create_plugin (
   p_id => 482691628042038047 + wwv_flow_api.g_id_offset
  ,p_flow_id => wwv_flow.g_flow_id
  ,p_plugin_type => 'ITEM TYPE'
- ,p_name => 'AU.JC.ADVANCED_RADIO'
+ ,p_name => 'ADVANCED_RADIO'
  ,p_display_name => 'Advanced Radio Group'
  ,p_image_prefix => '#PLUGIN_PREFIX#'
  ,p_plsql_code => 
@@ -358,15 +358,16 @@ wwv_flow_api.create_plugin (
 '        sys.htp.p(''<div style="whitespace:no-wrap;" > ''||'||unistr('\000a')||
 '            ''<input type="radio"  style="margin:5px 3px 5px 5px; "  name="''||l_name||''"  ''||'||unistr('\000a')||
 '                   '' id="''||p_item.name||''_''||(i-1)||''" ''||'||unistr('\000a')||
-'                    case when p_is_readonly then '' readonly="readonly" '' end ||  '||unistr('\000a')||
-'                     ''value="'''||
-'||'||unistr('\000a')||
+'                 /*    case when p_is_readonly then '' readonly="readonly" '' end || */   '||unistr('\000a')||
+'                     ''v'||
+'alue="''||'||unistr('\000a')||
 '                           sys.htf.escape_sc(l_column_value_list(2)(i))||''"''|| -- value column'||unistr('\000a')||
-'                     case when p_value = l_column_value_list(2)(i) then  '' checked="checked" '' end || '||unistr('\000a')||
+'                     case when p_value = l_column_value_list(2)(i) then  '' checked="checked" ''  '||unistr('\000a')||
+'                          when p_is_readonly then '' disabled="disabled" ''  end || '||unistr('\000a')||
 '                    '' ''||p_item.element_option_attributes||'' ''||'||unistr('\000a')||
 '            ''>''||'||unistr('\000a')||
-'            ''<label for="''||p_item.name||''_''||(i-1)||''">''||sys.htf.escape_sc(l_column_value_list(1)(i))||''</label> '''||
-' ||-- display column '||unistr('\000a')||
+'            ''<label for="''||p_it'||
+'em.name||''_''||(i-1)||''">''||sys.htf.escape_sc(l_column_value_list(1)(i))||''</label> '' ||-- display column '||unistr('\000a')||
 '            ''</div>'''||unistr('\000a')||
 '            );'||unistr('\000a')||
 '            '||unistr('\000a')||
@@ -381,15 +382,15 @@ wwv_flow_api.create_plugin (
 '    if render_extra then '||unistr('\000a')||
 ''||unistr('\000a')||
 '      start_option( l_total , p_item, actual_total  ) ; '||unistr('\000a')||
-'      '||unistr('\000a')||
+'   '||
+'   '||unistr('\000a')||
 '        sys.htp.p(''<div style="whitespace:no-wrap;" > ''||'||unistr('\000a')||
-'        ''<input type="'||
-'radio"    style="margin:5px 3px 5px 5px; "     name="''||l_name||''"  ''|| '||unistr('\000a')||
+'        ''<input type="radio"    style="margin:5px 3px 5px 5px; "     name="''||l_name||''"  ''|| '||unistr('\000a')||
 '                ''id="''||p_item.name||''_''||l_total ||''" ''||'||unistr('\000a')||
-'                case when p_is_readonly then '' readonly="readonly" '' end || '||unistr('\000a')||
+'               /* case when p_is_readonly then '' readonly="readonly" '' end || */ '||unistr('\000a')||
 '        '' value=''||sys.htf.escape_sc(p_value)|| ''" checked="checked" ''    || '' />''||'||unistr('\000a')||
-'        ''<label for="''||p_item.name||''_''||l_total  ||''">''|| nvl(sys.htf.escape_sc(p_value), ''(null)'') ||''<'||
-'/label> ''||'||unistr('\000a')||
+'        ''<label f'||
+'or="''||p_item.name||''_''||l_total  ||''">''|| nvl(sys.htf.escape_sc(p_value), ''(null)'') ||''</label> ''||'||unistr('\000a')||
 '       ''</div>'''||unistr('\000a')||
 '        ); '||unistr('\000a')||
 '      l_total := l_total + 1; '||unistr('\000a')||
@@ -402,64 +403,66 @@ wwv_flow_api.create_plugin (
 '    if render_null then '||unistr('\000a')||
 '    start_option( l_total , p_item, actual_total  ) ;  '||unistr('\000a')||
 '      '||unistr('\000a')||
-'        sys.htp.p(''<div style="whitespace:no-wrap;" > ''||'||unistr('\000a')||
-'        ''<input type="radio"    style="margin:5px 3px 5px 5px; "   name='||
-'"''||l_name||''"  id="''||p_item.name||''_''||l_total ||''" ''||'||unistr('\000a')||
+'        sys.htp.p(''<div style="whitespace'||
+':no-wrap;" > ''||'||unistr('\000a')||
+'        ''<input type="radio"    style="margin:5px 3px 5px 5px; "   name="''||l_name||''"  id="''||p_item.name||''_''||l_total ||''" ''||'||unistr('\000a')||
 '          case when p_is_readonly then '' readonly="readonly" '' end || '||unistr('\000a')||
 '        '' value="''||nvl( sys.htf.escape_sc(p_item.lov_null_value), '''')|| ''" ''||'||unistr('\000a')||
 '          case '||unistr('\000a')||
 '              --when p_item.lov_null_value = p_value '||unistr('\000a')||
-'              --or ( p_value is null and p_item.lov_null_value is null ) '||unistr('\000a')||
+'              --or ( p_value is '||
+'null and p_item.lov_null_value is null ) '||unistr('\000a')||
 '              when selected_value = ''N''     '||unistr('\000a')||
-'  '||
-'            then   '' checked="checked" '' '||unistr('\000a')||
-'              end    || '||unistr('\000a')||
+'              then   '' checked="checked" '' '||unistr('\000a')||
+'              when p_is_readonly then '' disabled="disabled" ''  end     || '||unistr('\000a')||
 '            '' />''||'||unistr('\000a')||
 '        ''<label for="''||p_item.name||''_''||l_total  ||''">''|| nvl( sys.htf.escape_sc(p_item.lov_null_text), ''Null'')  ||''</label> ''||'||unistr('\000a')||
 '       ''</div>'''||unistr('\000a')||
 '        ); '||unistr('\000a')||
 ''||unistr('\000a')||
-'      l_total := l_total + 1; '||unistr('\000a')||
+'      l_total '||
+':= l_total + 1; '||unistr('\000a')||
 '      end_option( l_total , p_item, actual_total  ) ; '||unistr('\000a')||
 '      '||unistr('\000a')||
 '    end if; '||unistr('\000a')||
 ''||unistr('\000a')||
 '   if render_other then '||unistr('\000a')||
 ''||unistr('\000a')||
-'     start_option( l'||
-'_total , p_item, actual_total  ) ;  '||unistr('\000a')||
+'     start_option( l_total , p_item, actual_total  ) ;  '||unistr('\000a')||
 '    '||unistr('\000a')||
 '    sys.htp.p(''<div style="whitespace:no-wrap;" > ''||'||unistr('\000a')||
 '        ''<input type="radio"   style="margin:5px 3px 5px 5px; "   name="''||l_name||''"  ''||'||unistr('\000a')||
-'                 case when p_is_readonly then '' readonly="readonly" '' end || '||unistr('\000a')||
+'                 case when p_is_readonly then '' readonly="readonly" '' end '||
+'|| '||unistr('\000a')||
 '                 '' id="''||p_item.name||''_''||l_total  ||''" ''||'||unistr('\000a')||
 '               '' value''|| case '||unistr('\000a')||
-'                              --when not '||
-'l_selected and p_value is not null '||unistr('\000a')||
+'                              --when not l_selected and p_value is not null '||unistr('\000a')||
 '                              when selected_value = ''O'' '||unistr('\000a')||
 '                              then ''="''||sys.htf.escape_sc(p_value) || ''" checked="checked" '' '||unistr('\000a')||
-'                              else ''="''||p_item.attribute_05|| ''" ''  -- default value for "Other" option. '||unistr('\000a')||
+'                              else ''="''||p_item.attribute_05|| ''" ''  -- d'||
+'efault value for "Other" option. '||unistr('\000a')||
 '                          end   ||'||unistr('\000a')||
+'                 case when nvl(selected_value,''X'')   <> ''O'' and p_is_readonly   then '' disabled="disabled" '' end || '||unistr('\000a')||
 '         '' />''||'||unistr('\000a')||
-'        ''<label for="''||p_item.name||''_''||l_total ||'''||
-'">''||p_item.attribute_04||''</label> '''||unistr('\000a')||
+'        ''<label for="''||p_item.name||''_''||l_total ||''">''||p_item.attribute_04||''</label> '''||unistr('\000a')||
 '        ); '||unistr('\000a')||
 '        sys.htp.p('||unistr('\000a')||
-'          ''<input onChange=" var v = $(this).val(); var n = $(''''#''||p_item.name||''_''||l_total ||'''''');  n.val( v ) ;  "  ''||'||unistr('\000a')||
+'          ''<input onChange=" var v = $(this).val(); var n = $(''''#''||p_item.'||
+'name||''_''||l_total ||'''''');  n.val( v ) ;  "  ''||'||unistr('\000a')||
 '                ''  onKeyup=" var v = $(this).val(); var n = $(''''#''||p_item.name||''_''||l_total ||''''''); if (v.length > 0 ) n.prop(''''checked'''', true);  n.val( v ) ;  " ''||'||unistr('\000a')||
-'                   ''value="''|| case wh'||
-'en /*not l_selected */ selected_value = ''O'' then  sys.htf.escape_sc(p_value)  end ||''" ''||'||unistr('\000a')||
-'                    '' class="advanced_radio_other_text_input" size="''||p_item.element_width||''"  maxlength="''||p_item.element_max_length||''" ''||'||unistr('\000a')||
-'                     case when p_is_readonly then '' readonly="readonly" '' end || '||unistr('\000a')||
+'                   ''value="''|| case when /*not l_selected */ selected_value = ''O'' then  sys.htf.escape_sc(p_value)  end ||''" ''||'||unistr('\000a')||
+'                    '' class="advanced_radio_other_tex'||
+'t_input" size="''||p_item.element_width||''"  maxlength="''||p_item.element_max_length||''" ''||'||unistr('\000a')||
+'                     case when p_is_readonly then '' disabled="disabled" '' end || '||unistr('\000a')||
 '                    ''placeholder="''|| placeholder_value  ||''"''||'||unistr('\000a')||
-'             ''></'||
-'input></div>'''||unistr('\000a')||
+'             ''></input></div>'''||unistr('\000a')||
 '    );-- display column '||unistr('\000a')||
 '    '||unistr('\000a')||
 '      l_total := l_total + 1; '||unistr('\000a')||
 '    end_option( l_total , p_item, actual_total ) ;  '||unistr('\000a')||
 '    '||unistr('\000a')||
-'    end if; '||unistr('\000a')||
+'    end if;'||
+' '||unistr('\000a')||
 '    '||unistr('\000a')||
 '    '||unistr('\000a')||
 'end;'||unistr('\000a')||
@@ -474,11 +477,11 @@ wwv_flow_api.create_plugin (
 'l_ret apex_plugin.t_page_item_ajax_result;'||unistr('\000a')||
 'begin'||unistr('\000a')||
 ''||unistr('\000a')||
-'apex_pl'||
-'ugin_util.print_lov_as_json(p_item.lov_definition,'||unistr('\000a')||
+'apex_plugin_util.print_lov_as_json(p_item.lov_definition,'||unistr('\000a')||
 '                                  p_item.name,'||unistr('\000a')||
 '                                  true);'||unistr('\000a')||
-'return l_ret;'||unistr('\000a')||
+'retur'||
+'n l_ret;'||unistr('\000a')||
 'end;'||unistr('\000a')||
 ''||unistr('\000a')||
 ''||unistr('\000a')||
@@ -487,8 +490,7 @@ wwv_flow_api.create_plugin (
 '    p_plugin              in apex_plugin.t_plugin,'||unistr('\000a')||
 '    p_value               in varchar2,'||unistr('\000a')||
 '    p_is_readonly         in boolean,'||unistr('\000a')||
-'    p_is_printer_friendl'||
-'y in boolean )'||unistr('\000a')||
+'    p_is_printer_friendly in boolean )'||unistr('\000a')||
 '    return apex_plugin.t_page_item_render_result'||unistr('\000a')||
 ' '||unistr('\000a')||
 'is'||unistr('\000a')||
@@ -496,41 +498,41 @@ wwv_flow_api.create_plugin (
 ''||unistr('\000a')||
 'l_result apex_plugin.t_page_item_render_result;'||unistr('\000a')||
 ' '||unistr('\000a')||
-'c_title_param apex_application_page_items.attribute_01%type:=nvl(p_item.attribute_01, ''Select one or more items'');'||unistr('\000a')||
+'c_title_param apex_appl'||
+'ication_page_items.attribute_01%type:=nvl(p_item.attribute_01, ''Select one or more items'');'||unistr('\000a')||
 'c_style apex_application_page_items.attribute_02%type:=p_item.attribute_02;'||unistr('\000a')||
 ''||unistr('\000a')||
 'begin '||unistr('\000a')||
 ''||unistr('\000a')||
 ''||unistr('\000a')||
 'if apex_application.g_debug then'||unistr('\000a')||
-'apex_plugin_util.debug_page_item( p_plugin, p'||
-'_item, p_value, p_is_readonly, p_is_printer_friendly);'||unistr('\000a')||
+'apex_plugin_util.debug_page_item( p_plugin, p_item, p_value, p_is_readonly, p_is_printer_friendly);'||unistr('\000a')||
 'end if;'||unistr('\000a')||
 ''||unistr('\000a')||
 'apex_javascript.add_onload_code ('||unistr('\000a')||
 '    '||unistr('\000a')||
 '    p_code => '''||unistr('\000a')||
-'       oldsub = apex.submit ; '||unistr('\000a')||
+'       oldsub = apex.subm'||
+'it ; '||unistr('\000a')||
 '       apex.submit = function() {'||unistr('\000a')||
 '       $(''''.advanced_radio_other_text_input'''').prop(''''disabled'''', ''''disabled'''');'||unistr('\000a')||
 '       oldsub ();'||unistr('\000a')||
 '       } '',  -- the key means it can only be added once on a page '||unistr('\000a')||
-'       p_key => ''advanced_radio_other_text_input_i'||
-'nit'' /* ||p_item.name */'||unistr('\000a')||
+'       p_key => ''advanced_radio_other_text_input_init'' /* ||p_item.name */'||unistr('\000a')||
 '    '||unistr('\000a')||
 ');'||unistr('\000a')||
 '                  '||unistr('\000a')||
 '          '||unistr('\000a')||
 ''||unistr('\000a')||
 ''||unistr('\000a')||
-'htp.p(''<fieldset class="radio_group''||p_item.element_attributes||'' name="''||apex_plugin.GET_INPUT_NAME_FOR_PAGE_ITEM(true)||'||unistr('\000a')||
+'htp.p(''<fieldset class="radio_group''||p_item.element_attributes||'' name="''||ape'||
+'x_plugin.GET_INPUT_NAME_FOR_PAGE_ITEM(true)||'||unistr('\000a')||
 '''" id="''||p_item.name||''"  title="''||c_title_param||''"><table style="border-spacing:0; "> '');    '||unistr('\000a')||
 ' '||unistr('\000a')||
 ' render_options(p_item, p_value , p_is_readonly );'||unistr('\000a')||
 'htp.p(''</table></fieldset>'');'||unistr('\000a')||
 'return l_result;'||unistr('\000a')||
 'END;'||unistr('\000a')||
-''||unistr('\000a')||
 ''
  ,p_render_function => 'render_advanced_radio'
  ,p_ajax_function => 'advanced_radio_ajax'
