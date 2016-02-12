@@ -30,7 +30,7 @@ begin
 wwv_flow_api.create_plugin(
  p_id=>wwv_flow_api.id(24522654590973709232)
 ,p_plugin_type=>'ITEM TYPE'
-,p_name=>'AU.JC.ADVANCED_RADIO'
+,p_name=>'AU.JP.ADVANCED_RADIO'
 ,p_display_name=>'Advanced Radio'
 ,p_supported_ui_types=>'DESKTOP:JQM_SMARTPHONE'
 ,p_plsql_code=>wwv_flow_utilities.join(wwv_flow_t_varchar2(
@@ -168,7 +168,9 @@ wwv_flow_api.create_plugin(
 '',
 '  ',
 '  -- set the placeholder ',
+'  placeholder_value := p_item.placeholder; ',
 '  -- try to retrieve attribute_08',
+'  /*',
 '  begin ',
 '   execute immediate '' ',
 '     declare ',
@@ -193,6 +195,7 @@ wwv_flow_api.create_plugin(
 '   '' using in p_item , out placeholder_value ;',
 '   exception when others then null; ',
 '   end; ',
+'*/ ',
 '  ',
 '',
 '  l_column_value_list :=',
@@ -294,10 +297,11 @@ wwv_flow_api.create_plugin(
 '        sys.htp.p(''<div style="whitespace:no-wrap;" > ''||',
 '            ''<input type="radio"  style="margin:5px 3px 5px 5px; "  name="''||l_name||''"  ''||',
 '                   '' id="''||p_item.name||''_''||(i-1)||''" ''||',
-'                    case when p_is_readonly then '' readonly="readonly" '' end ||  ',
+'                 /*    case when p_is_readonly then '' readonly="readonly" '' end || */   ',
 '                     ''value="''||',
 '                           sys.htf.escape_sc(l_column_value_list(2)(i))||''"''|| -- value column',
-'                     case when p_value = l_column_value_list(2)(i) then  '' checked="checked" '' end || ',
+'                     case when p_value = l_column_value_list(2)(i) then  '' checked="checked" ''  ',
+'                          when p_is_readonly then '' disabled="disabled" ''  end || ',
 '                    '' ''||p_item.element_option_attributes||'' ''||',
 '            ''>''||',
 '            ''<label for="''||p_item.name||''_''||(i-1)||''">''||sys.htf.escape_sc(l_column_value_list(1)(i))||''</label> '' ||-- display column ',
@@ -319,7 +323,7 @@ wwv_flow_api.create_plugin(
 '        sys.htp.p(''<div style="whitespace:no-wrap;" > ''||',
 '        ''<input type="radio"    style="margin:5px 3px 5px 5px; "     name="''||l_name||''"  ''|| ',
 '                ''id="''||p_item.name||''_''||l_total ||''" ''||',
-'                case when p_is_readonly then '' readonly="readonly" '' end || ',
+'               /* case when p_is_readonly then '' readonly="readonly" '' end || */ ',
 '        '' value=''||sys.htf.escape_sc(p_value)|| ''" checked="checked" ''    || '' />''||',
 '        ''<label for="''||p_item.name||''_''||l_total  ||''">''|| nvl(sys.htf.escape_sc(p_value), ''(null)'') ||''</label> ''||',
 '       ''</div>''',
@@ -343,7 +347,7 @@ wwv_flow_api.create_plugin(
 '              --or ( p_value is null and p_item.lov_null_value is null ) ',
 '              when selected_value = ''N''     ',
 '              then   '' checked="checked" '' ',
-'              end    || ',
+'              when p_is_readonly then '' disabled="disabled" ''  end     || ',
 '            '' />''||',
 '        ''<label for="''||p_item.name||''_''||l_total  ||''">''|| nvl( sys.htf.escape_sc(p_item.lov_null_text), ''Null'')  ||''</label> ''||',
 '       ''</div>''',
@@ -368,6 +372,7 @@ wwv_flow_api.create_plugin(
 '                              then ''="''||sys.htf.escape_sc(p_value) || ''" checked="checked" '' ',
 '                              else ''="''||p_item.attribute_05|| ''" ''  -- default value for "Other" option. ',
 '                          end   ||',
+'                 case when nvl(selected_value,''X'')   <> ''O'' and p_is_readonly   then '' disabled="disabled" '' end || ',
 '         '' />''||',
 '        ''<label for="''||p_item.name||''_''||l_total ||''">''||p_item.attribute_04||''</label> ''',
 '        ); ',
@@ -376,7 +381,7 @@ wwv_flow_api.create_plugin(
 '                ''  onKeyup=" var v = $(this).val(); var n = $(''''#''||p_item.name||''_''||l_total ||''''''); if (v.length > 0 ) n.prop(''''checked'''', true);  n.val( v ) ;  " ''||',
 '                   ''value="''|| case when /*not l_selected */ selected_value = ''O'' then  sys.htf.escape_sc(p_value)  end ||''" ''||',
 '                    '' class="advanced_radio_other_text_input" size="''||p_item.element_width||''"  maxlength="''||p_item.element_max_length||''" ''||',
-'                     case when p_is_readonly then '' readonly="readonly" '' end || ',
+'                     case when p_is_readonly then '' disabled="disabled" '' end || ',
 '                    ''placeholder="''|| placeholder_value  ||''"''||',
 '             ''></input></div>''',
 '    );-- display column ',
@@ -451,7 +456,6 @@ wwv_flow_api.create_plugin(
 'htp.p(''</table></fieldset>'');',
 'return l_result;',
 'END;',
-'',
 ''))
 ,p_render_function=>'render_advanced_radio'
 ,p_ajax_function=>'advanced_radio_ajax'
