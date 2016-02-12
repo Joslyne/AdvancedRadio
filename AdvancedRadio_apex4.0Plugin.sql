@@ -359,15 +359,16 @@ wwv_flow_api.create_plugin (
 '        sys.htp.p(''<div style="whitespace:no-wrap;" > ''||'||chr(10)||
 '            ''<input type="radio"  style="margin:5px 3px 5px 5px; "  name="''||l_name||''"  ''||'||chr(10)||
 '                   '' id="''||p_item.name||''_''||(i-1)||''" ''||'||chr(10)||
-'                    case when p_is_readonly then '' readonly="readonly" '' end ||  '||chr(10)||
-'                     ''value="'''||
-'||'||chr(10)||
+'                 /*    case when p_is_readonly then '' readonly="readonly" '' end || */   '||chr(10)||
+'                     ''v'||
+'alue="''||'||chr(10)||
 '                           sys.htf.escape_sc(l_column_value_list(2)(i))||''"''|| -- value column'||chr(10)||
-'                     case when p_value = l_column_value_list(2)(i) then  '' checked="checked" '' end || '||chr(10)||
+'                     case when p_value = l_column_value_list(2)(i) then  '' checked="checked" ''  '||chr(10)||
+'                          when p_is_readonly then '' disabled="disabled" ''  end || '||chr(10)||
 '                    '' ''||p_item.element_option_attributes||'' ''||'||chr(10)||
 '            ''>''||'||chr(10)||
-'            ''<label for="''||p_item.name||''_''||(i-1)||''">''||sys.htf.escape_sc(l_column_value_list(1)(i))||''</label> '''||
-' ||-- display column '||chr(10)||
+'            ''<label for="''||p_it'||
+'em.name||''_''||(i-1)||''">''||sys.htf.escape_sc(l_column_value_list(1)(i))||''</label> '' ||-- display column '||chr(10)||
 '            ''</div>'''||chr(10)||
 '            );'||chr(10)||
 '            '||chr(10)||
@@ -382,15 +383,15 @@ wwv_flow_api.create_plugin (
 '    if render_extra then '||chr(10)||
 ''||chr(10)||
 '      start_option( l_total , p_item, actual_total  ) ; '||chr(10)||
-'      '||chr(10)||
+'   '||
+'   '||chr(10)||
 '        sys.htp.p(''<div style="whitespace:no-wrap;" > ''||'||chr(10)||
-'        ''<input type="'||
-'radio"    style="margin:5px 3px 5px 5px; "     name="''||l_name||''"  ''|| '||chr(10)||
+'        ''<input type="radio"    style="margin:5px 3px 5px 5px; "     name="''||l_name||''"  ''|| '||chr(10)||
 '                ''id="''||p_item.name||''_''||l_total ||''" ''||'||chr(10)||
-'                case when p_is_readonly then '' readonly="readonly" '' end || '||chr(10)||
+'               /* case when p_is_readonly then '' readonly="readonly" '' end || */ '||chr(10)||
 '        '' value=''||sys.htf.escape_sc(p_value)|| ''" checked="checked" ''    || '' />''||'||chr(10)||
-'        ''<label for="''||p_item.name||''_''||l_total  ||''">''|| nvl(sys.htf.escape_sc(p_value), ''(null)'') ||''<'||
-'/label> ''||'||chr(10)||
+'        ''<label f'||
+'or="''||p_item.name||''_''||l_total  ||''">''|| nvl(sys.htf.escape_sc(p_value), ''(null)'') ||''</label> ''||'||chr(10)||
 '       ''</div>'''||chr(10)||
 '        ); '||chr(10)||
 '      l_total := l_total + 1; '||chr(10)||
@@ -403,64 +404,66 @@ wwv_flow_api.create_plugin (
 '    if render_null then '||chr(10)||
 '    start_option( l_total , p_item, actual_total  ) ;  '||chr(10)||
 '      '||chr(10)||
-'        sys.htp.p(''<div style="whitespace:no-wrap;" > ''||'||chr(10)||
-'        ''<input type="radio"    style="margin:5px 3px 5px 5px; "   name='||
-'"''||l_name||''"  id="''||p_item.name||''_''||l_total ||''" ''||'||chr(10)||
+'        sys.htp.p(''<div style="whitespace'||
+':no-wrap;" > ''||'||chr(10)||
+'        ''<input type="radio"    style="margin:5px 3px 5px 5px; "   name="''||l_name||''"  id="''||p_item.name||''_''||l_total ||''" ''||'||chr(10)||
 '          case when p_is_readonly then '' readonly="readonly" '' end || '||chr(10)||
 '        '' value="''||nvl( sys.htf.escape_sc(p_item.lov_null_value), '''')|| ''" ''||'||chr(10)||
 '          case '||chr(10)||
 '              --when p_item.lov_null_value = p_value '||chr(10)||
-'              --or ( p_value is null and p_item.lov_null_value is null ) '||chr(10)||
+'              --or ( p_value is '||
+'null and p_item.lov_null_value is null ) '||chr(10)||
 '              when selected_value = ''N''     '||chr(10)||
-'  '||
-'            then   '' checked="checked" '' '||chr(10)||
-'              end    || '||chr(10)||
+'              then   '' checked="checked" '' '||chr(10)||
+'              when p_is_readonly then '' disabled="disabled" ''  end     || '||chr(10)||
 '            '' />''||'||chr(10)||
 '        ''<label for="''||p_item.name||''_''||l_total  ||''">''|| nvl( sys.htf.escape_sc(p_item.lov_null_text), ''Null'')  ||''</label> ''||'||chr(10)||
 '       ''</div>'''||chr(10)||
 '        ); '||chr(10)||
 ''||chr(10)||
-'      l_total := l_total + 1; '||chr(10)||
+'      l_total '||
+':= l_total + 1; '||chr(10)||
 '      end_option( l_total , p_item, actual_total  ) ; '||chr(10)||
 '      '||chr(10)||
 '    end if; '||chr(10)||
 ''||chr(10)||
 '   if render_other then '||chr(10)||
 ''||chr(10)||
-'     start_option( l'||
-'_total , p_item, actual_total  ) ;  '||chr(10)||
+'     start_option( l_total , p_item, actual_total  ) ;  '||chr(10)||
 '    '||chr(10)||
 '    sys.htp.p(''<div style="whitespace:no-wrap;" > ''||'||chr(10)||
 '        ''<input type="radio"   style="margin:5px 3px 5px 5px; "   name="''||l_name||''"  ''||'||chr(10)||
-'                 case when p_is_readonly then '' readonly="readonly" '' end || '||chr(10)||
+'                 case when p_is_readonly then '' readonly="readonly" '' end '||
+'|| '||chr(10)||
 '                 '' id="''||p_item.name||''_''||l_total  ||''" ''||'||chr(10)||
 '               '' value''|| case '||chr(10)||
-'                              --when not '||
-'l_selected and p_value is not null '||chr(10)||
+'                              --when not l_selected and p_value is not null '||chr(10)||
 '                              when selected_value = ''O'' '||chr(10)||
 '                              then ''="''||sys.htf.escape_sc(p_value) || ''" checked="checked" '' '||chr(10)||
-'                              else ''="''||p_item.attribute_05|| ''" ''  -- default value for "Other" option. '||chr(10)||
+'                              else ''="''||p_item.attribute_05|| ''" ''  -- d'||
+'efault value for "Other" option. '||chr(10)||
 '                          end   ||'||chr(10)||
+'                 case when nvl(selected_value,''X'')   <> ''O'' and p_is_readonly   then '' disabled="disabled" '' end || '||chr(10)||
 '         '' />''||'||chr(10)||
-'        ''<label for="''||p_item.name||''_''||l_total ||'''||
-'">''||p_item.attribute_04||''</label> '''||chr(10)||
+'        ''<label for="''||p_item.name||''_''||l_total ||''">''||p_item.attribute_04||''</label> '''||chr(10)||
 '        ); '||chr(10)||
 '        sys.htp.p('||chr(10)||
-'          ''<input onChange=" var v = $(this).val(); var n = $(''''#''||p_item.name||''_''||l_total ||'''''');  n.val( v ) ;  "  ''||'||chr(10)||
+'          ''<input onChange=" var v = $(this).val(); var n = $(''''#''||p_item.'||
+'name||''_''||l_total ||'''''');  n.val( v ) ;  "  ''||'||chr(10)||
 '                ''  onKeyup=" var v = $(this).val(); var n = $(''''#''||p_item.name||''_''||l_total ||''''''); if (v.length > 0 ) n.prop(''''checked'''', true);  n.val( v ) ;  " ''||'||chr(10)||
-'                   ''value="''|| case wh'||
-'en /*not l_selected */ selected_value = ''O'' then  sys.htf.escape_sc(p_value)  end ||''" ''||'||chr(10)||
-'                    '' class="advanced_radio_other_text_input" size="''||p_item.element_width||''"  maxlength="''||p_item.element_max_length||''" ''||'||chr(10)||
-'                     case when p_is_readonly then '' readonly="readonly" '' end || '||chr(10)||
+'                   ''value="''|| case when /*not l_selected */ selected_value = ''O'' then  sys.htf.escape_sc(p_value)  end ||''" ''||'||chr(10)||
+'                    '' class="advanced_radio_other_tex'||
+'t_input" size="''||p_item.element_width||''"  maxlength="''||p_item.element_max_length||''" ''||'||chr(10)||
+'                     case when p_is_readonly then '' disabled="disabled" '' end || '||chr(10)||
 '                    ''placeholder="''|| placeholder_value  ||''"''||'||chr(10)||
-'             ''></'||
-'input></div>'''||chr(10)||
+'             ''></input></div>'''||chr(10)||
 '    );-- display column '||chr(10)||
 '    '||chr(10)||
 '      l_total := l_total + 1; '||chr(10)||
 '    end_option( l_total , p_item, actual_total ) ;  '||chr(10)||
 '    '||chr(10)||
-'    end if; '||chr(10)||
+'    end if;'||
+' '||chr(10)||
 '    '||chr(10)||
 '    '||chr(10)||
 'end;'||chr(10)||
@@ -475,11 +478,11 @@ wwv_flow_api.create_plugin (
 'l_ret apex_plugin.t_page_item_ajax_result;'||chr(10)||
 'begin'||chr(10)||
 ''||chr(10)||
-'apex_pl'||
-'ugin_util.print_lov_as_json(p_item.lov_definition,'||chr(10)||
+'apex_plugin_util.print_lov_as_json(p_item.lov_definition,'||chr(10)||
 '                                  p_item.name,'||chr(10)||
 '                                  true);'||chr(10)||
-'return l_ret;'||chr(10)||
+'retur'||
+'n l_ret;'||chr(10)||
 'end;'||chr(10)||
 ''||chr(10)||
 ''||chr(10)||
@@ -488,8 +491,7 @@ wwv_flow_api.create_plugin (
 '    p_plugin              in apex_plugin.t_plugin,'||chr(10)||
 '    p_value               in varchar2,'||chr(10)||
 '    p_is_readonly         in boolean,'||chr(10)||
-'    p_is_printer_friendl'||
-'y in boolean )'||chr(10)||
+'    p_is_printer_friendly in boolean )'||chr(10)||
 '    return apex_plugin.t_page_item_render_result'||chr(10)||
 ' '||chr(10)||
 'is'||chr(10)||
@@ -497,34 +499,35 @@ wwv_flow_api.create_plugin (
 ''||chr(10)||
 'l_result apex_plugin.t_page_item_render_result;'||chr(10)||
 ' '||chr(10)||
-'c_title_param apex_application_page_items.attribute_01%type:=nvl(p_item.attribute_01, ''Select one or more items'');'||chr(10)||
+'c_title_param apex_appl'||
+'ication_page_items.attribute_01%type:=nvl(p_item.attribute_01, ''Select one or more items'');'||chr(10)||
 'c_style apex_application_page_items.attribute_02%type:=p_item.attribute_02;'||chr(10)||
 ''||chr(10)||
 'begin '||chr(10)||
 ''||chr(10)||
 ''||chr(10)||
 'if apex_application.g_debug then'||chr(10)||
-'apex_plugin_util.debug_page_item( p_plugin, p'||
-'_item, p_value, p_is_readonly, p_is_printer_friendly);'||chr(10)||
+'apex_plugin_util.debug_page_item( p_plugin, p_item, p_value, p_is_readonly, p_is_printer_friendly);'||chr(10)||
 'end if;'||chr(10)||
 ''||chr(10)||
 'apex_javascript.add_onload_code ('||chr(10)||
 '    '||chr(10)||
 '    p_code => '''||chr(10)||
-'       oldsub = apex.submit ; '||chr(10)||
+'       oldsub = apex.subm'||
+'it ; '||chr(10)||
 '       apex.submit = function() {'||chr(10)||
 '       $(''''.advanced_radio_other_text_input'''').prop(''''disabled'''', ''''disabled'''');'||chr(10)||
 '       oldsub ();'||chr(10)||
 '       } '',  -- the key means it can only be added once on a page '||chr(10)||
-'       p_key => ''advanced_radio_other_text_input_i'||
-'nit'' /* ||p_item.name */'||chr(10)||
+'       p_key => ''advanced_radio_other_text_input_init'' /* ||p_item.name */'||chr(10)||
 '    '||chr(10)||
 ');'||chr(10)||
 '                  '||chr(10)||
 '          '||chr(10)||
 ''||chr(10)||
 ''||chr(10)||
-'htp.p(''<fieldset class="radio_group''||p_item.element_attributes||'' name="''||apex_plugin.GET_INPUT_NAME_FOR_PAGE_ITEM(true)||'||chr(10)||
+'htp.p(''<fieldset class="radio_group''||p_item.element_attributes||'' name="''||ape'||
+'x_plugin.GET_INPUT_NAME_FOR_PAGE_ITEM(true)||'||chr(10)||
 '''" id="''||p_item.name||''"  title="''||c_title_param||''"><table style="border-spacing:0; "> '');    '||chr(10)||
 ' '||chr(10)||
 ' render_options(p_item, p_value , p_is_readonly );'||chr(10)||
@@ -532,6 +535,8 @@ wwv_flow_api.create_plugin (
 'return l_result;'||chr(10)||
 'END;'||chr(10)||
 ''
+ ,p_render_function => 'render_advanced_radio'
+ ,p_ajax_function => 'advanced_radio_ajax'
  ,p_standard_attributes => 'VISIBLE:READONLY:SOURCE:ELEMENT:WIDTH:ELEMENT_OPTION:ENCRYPT:LOV:LOV_DISPLAY_NULL'
  ,p_sql_min_column_count => 2
  ,p_sql_max_column_count => 2
