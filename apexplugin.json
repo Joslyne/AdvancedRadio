@@ -1,6 +1,6 @@
 {
   "name" : "AdvancedRadio",
-  "version" : "1.0",
+  "version" : "1.1",
   "description" : "Radio Group with the option of Sorting by rows or columns, and add an extra Option to allow users to specify another value. ",
   "keywords" : ["radio", "joslyne", "item", "Specify", "Custom", "other", "extra" ],
   "homepage" : "https://github.com/Joslyne/AdvancedRadio",
